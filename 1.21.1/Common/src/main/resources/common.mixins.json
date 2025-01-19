@@ -4,6 +4,8 @@
   "compatibilityLevel": "JAVA_17",
   "package": "${modGroup}.mixin",
   "mixins": [
+    "GrindstoneMenu\u0024SlotMixin",
+    "GrindstoneMenuMixin",
     "ItemStackMixin"
   ],
   "client": [
