@@ -16,6 +16,6 @@ public class ModEnchantmentTagProvider extends AbstractTagProvider<Enchantment> 
 
     @Override
     public void addTags(HolderLookup.Provider provider) {
-        this.add(ModRegistry.PERSISTENT_ENCHANTMENTS_ENCHANTMENT_TAG).addTag(EnchantmentTags.CURSE);
+        this.tag(ModRegistry.PERSISTENT_ENCHANTMENTS_ENCHANTMENT_TAG).addTag(EnchantmentTags.CURSE);
     }
 }

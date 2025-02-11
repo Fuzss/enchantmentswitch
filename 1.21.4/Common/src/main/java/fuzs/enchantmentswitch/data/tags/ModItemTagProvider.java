@@ -15,6 +15,6 @@ public class ModItemTagProvider extends AbstractTagProvider<Item> {
 
     @Override
     public void addTags(HolderLookup.Provider provider) {
-        this.add(ModRegistry.PERSISTENT_ENCHANTMENTS_ITEM_TAG);
+        this.tag(ModRegistry.PERSISTENT_ENCHANTMENTS_ITEM_TAG);
     }
 }
