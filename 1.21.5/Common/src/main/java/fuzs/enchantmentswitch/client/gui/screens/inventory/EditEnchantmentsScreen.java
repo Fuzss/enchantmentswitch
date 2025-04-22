@@ -6,11 +6,12 @@ import fuzs.enchantmentswitch.client.gui.components.ClickableEnchantmentButton;
 import fuzs.enchantmentswitch.client.gui.util.EnchantmentTooltipHelper;
 import fuzs.enchantmentswitch.init.ModRegistry;
 import fuzs.enchantmentswitch.network.client.ServerboundSetEnchantmentsMessage;
+import fuzs.puzzleslib.api.client.gui.v2.ScreenHelper;
 import fuzs.puzzleslib.api.client.gui.v2.components.SpritelessImageButton;
-import fuzs.puzzleslib.api.client.gui.v2.components.TooltipRenderHelper;
-import fuzs.puzzleslib.api.client.gui.v2.components.tooltip.ClientComponentSplitter;
-import fuzs.puzzleslib.api.client.gui.v2.screen.ScreenHelper;
+import fuzs.puzzleslib.api.client.gui.v2.tooltip.ClientComponentSplitter;
+import fuzs.puzzleslib.api.client.gui.v2.tooltip.TooltipRenderHelper;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
+import fuzs.puzzleslib.api.network.v4.MessageSender;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -141,10 +142,11 @@ public class EditEnchantmentsScreen extends Screen {
         List<Component> tooltipLines = new ArrayList<>();
         tooltipLines.add(EnchantmentTooltipHelper.getItemDisplayName(this.itemStack));
         Item.TooltipContext tooltipContext = Item.TooltipContext.of(this.minecraft.level);
-        this.itemEnchantments.toImmutable().addToTooltip(tooltipContext, tooltipLines::add, TooltipFlag.NORMAL);
+        this.itemEnchantments.toImmutable()
+                .addToTooltip(tooltipContext, tooltipLines::add, TooltipFlag.NORMAL, this.itemStack);
         this.storedEnchantments.toImmutable().addToTooltip(tooltipContext, (Component component) -> {
             tooltipLines.add(EnchantmentTooltipHelper.applyStoredEnchantmentStyle(component));
-        }, TooltipFlag.NORMAL);
+        }, TooltipFlag.NORMAL, this.itemStack);
         this.itemTooltip = ClientComponentSplitter.splitTooltipLines(tooltipLines)
                 .map(ClientTooltipComponent::create)
                 .toList();
@@ -220,7 +222,7 @@ public class EditEnchantmentsScreen extends Screen {
                     this.containerId,
                     this.slotIndex,
                     this.storedEnchantments.keySet());
-            EnchantmentSwitch.NETWORK.sendMessage(new ServerboundSetEnchantmentsMessage(this.containerId,
+            MessageSender.broadcast(new ServerboundSetEnchantmentsMessage(this.containerId,
                     this.slotIndex,
                     this.storedEnchantments.keySet()));
         }

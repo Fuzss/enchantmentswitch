@@ -2,18 +2,14 @@ package fuzs.enchantmentswitch.network.client;
 
 import com.google.common.collect.Sets;
 import fuzs.enchantmentswitch.init.ModRegistry;
-import fuzs.puzzleslib.api.network.v3.ServerMessageListener;
-import fuzs.puzzleslib.api.network.v3.ServerboundMessage;
+import fuzs.puzzleslib.api.network.v4.message.MessageListener;
+import fuzs.puzzleslib.api.network.v4.message.play.ServerboundPlayMessage;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
@@ -26,7 +22,7 @@ import java.util.Set;
 
 public record ServerboundSetEnchantmentsMessage(int containerId,
                                                 int slotIndex,
-                                                Set<Holder<Enchantment>> storedEnchantments) implements ServerboundMessage<ServerboundSetEnchantmentsMessage> {
+                                                Set<Holder<Enchantment>> storedEnchantments) implements ServerboundPlayMessage {
     public static final StreamCodec<RegistryFriendlyByteBuf, ServerboundSetEnchantmentsMessage> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.VAR_INT,
             ServerboundSetEnchantmentsMessage::containerId,
@@ -37,11 +33,14 @@ public record ServerboundSetEnchantmentsMessage(int containerId,
             ServerboundSetEnchantmentsMessage::new);
 
     @Override
-    public ServerMessageListener<ServerboundSetEnchantmentsMessage> getHandler() {
-        return new ServerMessageListener<>() {
+    public MessageListener<Context> getListener() {
+        return new MessageListener<Context>() {
             @Override
-            public void handle(ServerboundSetEnchantmentsMessage message, MinecraftServer server, ServerGamePacketListenerImpl handler, ServerPlayer player, ServerLevel level) {
-                setEnchantments(player, message.containerId, message.slotIndex, message.storedEnchantments);
+            public void accept(Context context) {
+                setEnchantments(context.player(),
+                        ServerboundSetEnchantmentsMessage.this.containerId,
+                        ServerboundSetEnchantmentsMessage.this.slotIndex,
+                        ServerboundSetEnchantmentsMessage.this.storedEnchantments);
             }
         };
     }

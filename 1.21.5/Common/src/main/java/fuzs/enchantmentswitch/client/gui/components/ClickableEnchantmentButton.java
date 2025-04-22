@@ -3,7 +3,7 @@ package fuzs.enchantmentswitch.client.gui.components;
 import fuzs.enchantmentswitch.client.gui.screens.inventory.EditEnchantmentsScreen;
 import fuzs.enchantmentswitch.client.gui.screens.inventory.EnchantmentState;
 import fuzs.puzzleslib.api.client.gui.v2.components.SpritelessImageButton;
-import fuzs.puzzleslib.api.client.gui.v2.components.tooltip.TooltipBuilder;
+import fuzs.puzzleslib.api.client.gui.v2.tooltip.TooltipBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

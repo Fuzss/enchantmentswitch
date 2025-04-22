@@ -25,7 +25,7 @@ public class StoredEnchantmentsTooltipHandler {
             List<Component> enchantmentLines = new ArrayList<>();
             itemEnchantments.addToTooltip(tooltipContext, (Component component) -> {
                 enchantmentLines.add(EnchantmentTooltipHelper.applyStoredEnchantmentStyle(component));
-            }, tooltipType);
+            }, tooltipType, itemStack);
             tooltipLines.addAll(index, enchantmentLines);
         }
     }
