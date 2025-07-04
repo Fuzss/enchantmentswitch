@@ -15,7 +15,6 @@ import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -56,8 +55,8 @@ public class TriggerLockRenderHandler {
     }
 
     public static void onAfterRender(AbstractContainerScreen<?> screen, GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        if (screen.getMenu().getCarried().isEmpty() &&
-                TriggerLockRenderHandler.isKeyDown(EnchantmentSwitchClient.EDIT_ENCHANTMENTS_KEY_MAPPING)) {
+        if (screen.getMenu().getCarried().isEmpty()
+                && TriggerLockRenderHandler.isKeyDown(EnchantmentSwitchClient.EDIT_ENCHANTMENTS_KEY_MAPPING)) {
             Slot hoveredSlot = screen.hoveredSlot;
             if (TriggerLockRenderHandler.hoveredSlot != hoveredSlot) {
                 // reset trigger time when the hovered slot changes
@@ -65,8 +64,8 @@ public class TriggerLockRenderHandler {
             }
             if (isValidSlot(hoveredSlot, screen.minecraft.player)) {
                 incrementTriggerTime(screen, hoveredSlot, partialTick);
-                guiGraphics.pose().pushPose();
-                guiGraphics.pose().translate(screen.leftPos, screen.topPos, 0.0F);
+                guiGraphics.pose().pushMatrix();
+                guiGraphics.pose().translate(screen.leftPos, screen.topPos);
                 float animationProgress = Math.clamp(
                         triggerTime / EnchantmentSwitch.CONFIG.get(ClientConfig.class).openEnchantmentsEditorTicks,
                         0.0F,
@@ -75,14 +74,8 @@ public class TriggerLockRenderHandler {
                 int posY = hoveredSlot.y + Mth.floor(16.0F * (1.0F - animationProgress));
                 // high z offset to render in front of carried item stack
                 // color kindly stolen from Bedrockify mod's slot highlight :P
-                guiGraphics.fill(RenderType.gui(),
-                        posX,
-                        posY,
-                        posX + 16,
-                        posY + Mth.ceil(16.0F * animationProgress),
-                        350,
-                        0X8955BA00);
-                guiGraphics.pose().popPose();
+                guiGraphics.fill(posX, posY, posX + 16, posY + Mth.ceil(16.0F * animationProgress), 0X8955BA00);
+                guiGraphics.pose().popMatrix();
             }
         } else {
             resetTriggerValues(null);
@@ -104,8 +97,8 @@ public class TriggerLockRenderHandler {
     }
 
     private static void incrementTriggerTime(AbstractContainerScreen<?> screen, Slot slot, float partialTick) {
-        if ((triggerTime += partialTick) >=
-                EnchantmentSwitch.CONFIG.get(ClientConfig.class).openEnchantmentsEditorTicks) {
+        if ((triggerTime += partialTick)
+                >= EnchantmentSwitch.CONFIG.get(ClientConfig.class).openEnchantmentsEditorTicks) {
             // just make sure we only trigger once when the max time is reached, then set to some arbitrary value, so we do not trigger again
             if (triggerTime < MAX_TRIGGER_TIME) {
                 screen.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
@@ -130,8 +123,8 @@ public class TriggerLockRenderHandler {
 
     public static boolean isKeyDown(KeyMapping keyMapping) {
         // we need to listen to repeat events for the key press, this is not possible using the key mapping instance
-        if (keyMapping.key.getType() == InputConstants.Type.KEYSYM &&
-                keyMapping.key.getValue() != InputConstants.UNKNOWN.getValue()) {
+        if (keyMapping.key.getType() == InputConstants.Type.KEYSYM
+                && keyMapping.key.getValue() != InputConstants.UNKNOWN.getValue()) {
             return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), keyMapping.key.getValue());
         } else {
             return false;

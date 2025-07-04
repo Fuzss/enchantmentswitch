@@ -18,7 +18,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
@@ -155,14 +155,18 @@ public class EditEnchantmentsScreen extends Screen {
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
-        guiGraphics.drawString(this.font, this.title, this.leftPos + 62, this.topPos + 8, 0x404040, false);
+        guiGraphics.drawString(this.font, this.title, this.leftPos + 62, this.topPos + 8, 0xFF404040, false);
         this.name.render(guiGraphics, mouseX, mouseY, partialTick);
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().scale(2.0F, 2.0F, 2.0F);
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.pose().scale(2.0F, 2.0F);
         guiGraphics.renderFakeItem(this.itemStack, (this.leftPos + 17) / 2, (this.topPos + 8) / 2);
-        guiGraphics.pose().popPose();
-        if (this.itemTooltip != null &&
-                ScreenHelper.isHovering(this.leftPos + 17, this.topPos + 8, 32, 32, mouseX, mouseY)) {
+        guiGraphics.pose().popMatrix();
+        if (this.itemTooltip != null && ScreenHelper.isHovering(this.leftPos + 17,
+                this.topPos + 8,
+                32,
+                32,
+                mouseX,
+                mouseY)) {
             TooltipRenderHelper.renderTooltipComponents(guiGraphics, mouseX, mouseY, this.itemTooltip);
         }
     }
@@ -170,7 +174,7 @@ public class EditEnchantmentsScreen extends Screen {
     @Override
     public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.renderTransparentBackground(guiGraphics);
-        guiGraphics.blit(RenderType::guiTextured,
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
                 EDIT_ENCHANTMENTS_TEXTURE,
                 this.leftPos,
                 this.topPos,
@@ -180,7 +184,7 @@ public class EditEnchantmentsScreen extends Screen {
                 this.imageHeight,
                 256,
                 256);
-        guiGraphics.blit(RenderType::guiTextured,
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
                 EDIT_ENCHANTMENTS_TEXTURE,
                 this.leftPos + this.imageWidth - 3 - 26,
                 this.topPos - 23,
@@ -190,7 +194,7 @@ public class EditEnchantmentsScreen extends Screen {
                 23,
                 256,
                 256);
-        guiGraphics.blitSprite(RenderType::guiTextured,
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,
                 TEXT_FIELD_SPRITE,
                 this.leftPos + 59,
                 this.topPos + 20,

@@ -2,5 +2,5 @@
   "enchantments.edit": "Edit Enchantments",
   "gui.enchantmentswitch.tooltip.incompatible": "This enchantment is incompatible with: %s",
   "key.categories.enchantmentswitch": "Enchantment Switch",
-  "key.edit_enchantments": "Edit Enchantments"
+  "key.enchantmentswitch.edit_enchantments": "Edit Enchantments"
 }
