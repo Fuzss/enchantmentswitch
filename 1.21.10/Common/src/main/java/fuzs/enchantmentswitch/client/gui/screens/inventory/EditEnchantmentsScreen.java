@@ -10,6 +10,7 @@ import fuzs.puzzleslib.api.client.gui.v2.ScreenHelper;
 import fuzs.puzzleslib.api.client.gui.v2.components.SpritelessImageButton;
 import fuzs.puzzleslib.api.client.gui.v2.tooltip.ClientComponentSplitter;
 import fuzs.puzzleslib.api.client.gui.v2.tooltip.TooltipRenderHelper;
+import fuzs.puzzleslib.api.client.key.v1.KeyMappingHelper;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import fuzs.puzzleslib.api.network.v4.MessageSender;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -18,6 +19,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -203,10 +205,10 @@ public class EditEnchantmentsScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (super.keyPressed(keyCode, scanCode, modifiers)) {
+    public boolean keyPressed(KeyEvent keyEvent) {
+        if (super.keyPressed(keyEvent)) {
             return true;
-        } else if (this.minecraft.options.keyInventory.matches(keyCode, scanCode)) {
+        } else if (KeyMappingHelper.isKeyActiveAndMatches(this.minecraft.options.keyInventory, keyEvent)) {
             this.onClose();
             return true;
         } else {

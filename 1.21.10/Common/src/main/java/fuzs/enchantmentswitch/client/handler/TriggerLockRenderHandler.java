@@ -56,7 +56,7 @@ public class TriggerLockRenderHandler {
 
     public static void onAfterRender(AbstractContainerScreen<?> screen, GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         if (screen.getMenu().getCarried().isEmpty()
-                && TriggerLockRenderHandler.isKeyDown(EnchantmentSwitchClient.EDIT_ENCHANTMENTS_KEY_MAPPING)) {
+                && isKeyDown(EnchantmentSwitchClient.EDIT_ENCHANTMENTS_KEY_MAPPING)) {
             Slot hoveredSlot = screen.hoveredSlot;
             if (TriggerLockRenderHandler.hoveredSlot != hoveredSlot) {
                 // reset trigger time when the hovered slot changes
@@ -125,7 +125,7 @@ public class TriggerLockRenderHandler {
         // we need to listen to repeat events for the key press, this is not possible using the key mapping instance
         if (keyMapping.key.getType() == InputConstants.Type.KEYSYM
                 && keyMapping.key.getValue() != InputConstants.UNKNOWN.getValue()) {
-            return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), keyMapping.key.getValue());
+            return InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), keyMapping.key.getValue());
         } else {
             return false;
         }
