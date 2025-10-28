@@ -1,6 +1,6 @@
 package fuzs.enchantmentswitch.client.handler;
 
-import fuzs.enchantmentswitch.client.gui.util.EnchantmentTooltipHelper;
+import fuzs.enchantmentswitch.client.util.EnchantmentTooltipHelper;
 import fuzs.enchantmentswitch.init.ModRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.PlainTextContents;
@@ -39,12 +39,14 @@ public class StoredEnchantmentsTooltipHandler {
                     component = component.getSiblings().getFirst();
                 }
             }
+
             // also matches Enchantment Descriptions format, so we append afterward
             if (component.getContents() instanceof TranslatableContents contents &&
                     contents.getKey().matches("^enchantment\\.[a-z0-9_.-]+\\.[a-z0-9/._-]+")) {
                 index = i + 1;
             }
         }
+
         return index;
     }
 }

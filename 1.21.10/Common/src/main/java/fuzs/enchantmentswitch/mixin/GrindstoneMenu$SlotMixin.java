@@ -33,6 +33,7 @@ abstract class GrindstoneMenu$SlotMixin extends Slot {
                 experienceFromItem += holder.value().getMinCost(enchantmentLevel);
             }
         }
+
         return experienceFromItem;
     }
 }

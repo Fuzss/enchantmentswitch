@@ -1,7 +1,7 @@
 package fuzs.enchantmentswitch.client.gui.screens.inventory;
 
 import com.google.common.collect.ImmutableSet;
-import fuzs.enchantmentswitch.client.gui.util.EnchantmentTooltipHelper;
+import fuzs.enchantmentswitch.client.util.EnchantmentTooltipHelper;
 import fuzs.enchantmentswitch.init.ModRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;

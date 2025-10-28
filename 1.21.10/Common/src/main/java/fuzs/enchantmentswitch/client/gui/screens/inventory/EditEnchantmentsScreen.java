@@ -3,7 +3,7 @@ package fuzs.enchantmentswitch.client.gui.screens.inventory;
 import fuzs.enchantmentswitch.EnchantmentSwitch;
 import fuzs.enchantmentswitch.client.gui.components.AbstractMenuSelectionList;
 import fuzs.enchantmentswitch.client.gui.components.ClickableEnchantmentButton;
-import fuzs.enchantmentswitch.client.gui.util.EnchantmentTooltipHelper;
+import fuzs.enchantmentswitch.client.util.EnchantmentTooltipHelper;
 import fuzs.enchantmentswitch.init.ModRegistry;
 import fuzs.enchantmentswitch.network.client.ServerboundSetEnchantmentsMessage;
 import fuzs.puzzleslib.api.client.gui.v2.ScreenHelper;
@@ -35,6 +35,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,7 @@ public class EditEnchantmentsScreen extends Screen {
     private static final ResourceLocation TEXT_FIELD_DISABLED_SPRITE = ResourceLocationHelper.withDefaultNamespace(
             "container/anvil/text_field_disabled");
 
+    @Nullable
     private final Screen lastScreen;
     private final int containerId;
     private final ItemStack itemStack;
@@ -64,7 +66,7 @@ public class EditEnchantmentsScreen extends Screen {
     private EnchantmentSelectionList scrollingList;
     private List<? extends ClientTooltipComponent> itemTooltip;
 
-    public EditEnchantmentsScreen(Screen lastScreen, int containerId, ItemStack itemStack, int slotIndex) {
+    public EditEnchantmentsScreen(@Nullable Screen lastScreen, int containerId, ItemStack itemStack, int slotIndex) {
         super(COMPONENT_EDIT_ENCHANTMENTS);
         this.lastScreen = lastScreen;
         this.containerId = containerId;

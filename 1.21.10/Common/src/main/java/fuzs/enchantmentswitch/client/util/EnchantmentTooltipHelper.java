@@ -1,4 +1,4 @@
-package fuzs.enchantmentswitch.client.gui.util;
+package fuzs.enchantmentswitch.client.util;
 
 import fuzs.enchantmentswitch.EnchantmentSwitch;
 import net.minecraft.ChatFormatting;
