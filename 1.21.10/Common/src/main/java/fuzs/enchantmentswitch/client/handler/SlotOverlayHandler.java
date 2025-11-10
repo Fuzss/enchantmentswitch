@@ -88,7 +88,8 @@ public class SlotOverlayHandler {
     public static void onEndClientTick(Minecraft minecraft) {
         if (minecraft.player != null) {
             lastTriggerTime = triggerTime;
-            if (isKeyDown(EnchantmentSwitchClient.EDIT_ENCHANTMENTS_KEY_MAPPING)) {
+            if (isKeyDown(EnchantmentSwitchClient.EDIT_ENCHANTMENTS_KEY_MAPPING) && !EnchantmentSwitch.CONFIG.get(
+                    ClientConfig.class).openEditorInstantly()) {
                 Slot slot = getHoveredSlot(minecraft.screen, minecraft.player);
                 resetTriggerValues(slot);
                 if (isValidSlot(slot, minecraft.player)) {
@@ -138,12 +139,25 @@ public class SlotOverlayHandler {
         // just make sure we only trigger once when the max time is reached, then set to some arbitrary value, so we do not trigger again
         if (triggerTime < MAX_TRIGGER_TIME
                 && ++triggerTime >= EnchantmentSwitch.CONFIG.get(ClientConfig.class).openEnchantmentsEditorTicks) {
+            executeTriggerAction(minecraft, slot);
+            triggerTime = MAX_TRIGGER_TIME;
+        }
+    }
+
+    public static void executeTriggerAction(Minecraft minecraft) {
+        if (EnchantmentSwitch.CONFIG.get(ClientConfig.class).openEditorInstantly()) {
+            Slot slot = getHoveredSlot(minecraft.screen, minecraft.player);
+            executeTriggerAction(minecraft, slot);
+        }
+    }
+
+    private static void executeTriggerAction(Minecraft minecraft, Slot slot) {
+        if (isValidSlot(slot, minecraft.player)) {
             minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
             minecraft.setScreen(new EditEnchantmentsScreen(minecraft.screen,
                     minecraft.player.containerMenu.containerId,
                     slot.getItem(),
                     unwrapSlot(slot).index));
-            triggerTime = MAX_TRIGGER_TIME;
         }
     }
 

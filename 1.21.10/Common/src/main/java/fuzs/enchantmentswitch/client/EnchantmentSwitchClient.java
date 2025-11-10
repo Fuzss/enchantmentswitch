@@ -13,7 +13,6 @@ import fuzs.puzzleslib.api.client.event.v1.gui.ScreenEvents;
 import fuzs.puzzleslib.api.client.key.v1.KeyActivationHandler;
 import fuzs.puzzleslib.api.client.key.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 
 public class EnchantmentSwitchClient implements ClientModConstructor {
@@ -43,12 +42,10 @@ public class EnchantmentSwitchClient implements ClientModConstructor {
     public void onRegisterKeyMappings(KeyMappingsContext context) {
         context.registerKeyMapping(EDIT_ENCHANTMENTS_KEY_MAPPING,
                 KeyActivationHandler.of()
-                        .withGameHandler((Minecraft minecraft) -> {
-                            // NO-OP
-                        })
+                        .withGameHandler(SlotOverlayHandler::executeTriggerAction)
                         .withScreenHandler((Class<AbstractContainerScreen<?>>) (Class<?>) AbstractContainerScreen.class,
                                 (AbstractContainerScreen<?> screen) -> {
-                                    // NO-OP
+                                    SlotOverlayHandler.executeTriggerAction(screen.minecraft);
                                 }));
     }
 }
