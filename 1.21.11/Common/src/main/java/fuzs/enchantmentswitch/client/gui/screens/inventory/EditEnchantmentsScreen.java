@@ -11,7 +11,7 @@ import fuzs.puzzleslib.api.client.gui.v2.components.SpritelessImageButton;
 import fuzs.puzzleslib.api.client.gui.v2.tooltip.ClientComponentSplitter;
 import fuzs.puzzleslib.api.client.gui.v2.tooltip.TooltipRenderHelper;
 import fuzs.puzzleslib.api.client.key.v1.KeyMappingHelper;
-import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
+import net.minecraft.resources.Identifier;
 import fuzs.puzzleslib.api.network.v4.MessageSender;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.client.gui.GuiGraphics;
@@ -27,7 +27,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,7 +35,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +43,11 @@ import java.util.Objects;
 
 public class EditEnchantmentsScreen extends Screen {
     public static final Component COMPONENT_EDIT_ENCHANTMENTS = Component.translatable("enchantments.edit");
-    public static final ResourceLocation EDIT_ENCHANTMENTS_TEXTURE = EnchantmentSwitch.id(
+    public static final Identifier EDIT_ENCHANTMENTS_TEXTURE = EnchantmentSwitch.id(
             "textures/gui/enchantments.png");
-    private static final ResourceLocation TEXT_FIELD_SPRITE = ResourceLocationHelper.withDefaultNamespace(
+    private static final Identifier TEXT_FIELD_SPRITE = Identifier.withDefaultNamespace(
             "container/anvil/text_field");
-    private static final ResourceLocation TEXT_FIELD_DISABLED_SPRITE = ResourceLocationHelper.withDefaultNamespace(
+    private static final Identifier TEXT_FIELD_DISABLED_SPRITE = Identifier.withDefaultNamespace(
             "container/anvil/text_field_disabled");
 
     @Nullable

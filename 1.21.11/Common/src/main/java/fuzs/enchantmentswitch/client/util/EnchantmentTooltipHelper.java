@@ -2,7 +2,6 @@ package fuzs.enchantmentswitch.client.util;
 
 import fuzs.enchantmentswitch.EnchantmentSwitch;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.locale.Language;
@@ -10,9 +9,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,7 +56,7 @@ public class EnchantmentTooltipHelper {
     @Nullable
     private static String getEnchantmentDescriptionKey(Holder<Enchantment> enchantment) {
         String translationKey = enchantment.unwrapKey().map((ResourceKey<Enchantment> resourceKey) -> {
-            return Util.makeDescriptionId(resourceKey.registry().getPath(), resourceKey.location());
+            return Util.makeDescriptionId(resourceKey.registry().getPath(), resourceKey.identifier());
         }).orElse(null);
         if (translationKey == null) {
             return null;
