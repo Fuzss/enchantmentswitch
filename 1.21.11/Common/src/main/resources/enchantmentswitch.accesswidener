@@ -1,0 +1,5 @@
+accessWidener   v2  named
+accessible  field   net/minecraft/client/gui/screens/inventory/tooltip/ClientTextTooltip    text    Lnet/minecraft/util/FormattedCharSequence;
+accessible  field   net/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen$SlotWrapper  target  Lnet/minecraft/world/inventory/Slot;
+accessible  field   net/minecraft/client/gui/components/AbstractScrollArea  scrolling   Z
+extendable  method  net/minecraft/client/gui/components/AbstractSelectionList   getFirstEntryY  ()I
