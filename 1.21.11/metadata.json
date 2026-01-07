@@ -36,13 +36,13 @@
     ],
     "links": [
         {
-            "name": "github",
-            "slug": "enchantmentswitch"
-        },
-        {
             "name": "curseforge",
             "slug": "enchantment-switch",
             "id": "1368895"
+        },
+        {
+            "name": "github",
+            "slug": "enchantmentswitch"
         },
         {
             "name": "modrinth",

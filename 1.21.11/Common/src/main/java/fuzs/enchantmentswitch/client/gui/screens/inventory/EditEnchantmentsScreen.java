@@ -11,7 +11,6 @@ import fuzs.puzzleslib.api.client.gui.v2.components.SpritelessImageButton;
 import fuzs.puzzleslib.api.client.gui.v2.tooltip.ClientComponentSplitter;
 import fuzs.puzzleslib.api.client.gui.v2.tooltip.TooltipRenderHelper;
 import fuzs.puzzleslib.api.client.key.v1.KeyMappingHelper;
-import net.minecraft.resources.Identifier;
 import fuzs.puzzleslib.api.network.v4.MessageSender;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.client.gui.GuiGraphics;
@@ -43,10 +42,8 @@ import java.util.Objects;
 
 public class EditEnchantmentsScreen extends Screen {
     public static final Component COMPONENT_EDIT_ENCHANTMENTS = Component.translatable("enchantments.edit");
-    public static final Identifier EDIT_ENCHANTMENTS_TEXTURE = EnchantmentSwitch.id(
-            "textures/gui/enchantments.png");
-    private static final Identifier TEXT_FIELD_SPRITE = Identifier.withDefaultNamespace(
-            "container/anvil/text_field");
+    public static final Identifier EDIT_ENCHANTMENTS_TEXTURE = EnchantmentSwitch.id("textures/gui/enchantments.png");
+    private static final Identifier TEXT_FIELD_SPRITE = Identifier.withDefaultNamespace("container/anvil/text_field");
     private static final Identifier TEXT_FIELD_DISABLED_SPRITE = Identifier.withDefaultNamespace(
             "container/anvil/text_field_disabled");
 
@@ -100,11 +97,12 @@ public class EditEnchantmentsScreen extends Screen {
         this.name.setFocused(false);
         this.name.setTextColor(-1);
         this.name.setTextColorUneditable(-1);
+        this.name.setInvertHighlightedTextColor(false);
         this.name.setBordered(false);
         this.name.setMaxLength(50);
         this.name.setValue(this.itemStack.getHoverName().getString());
         this.name.setEditable(false);
-        this.addWidget(this.name);
+        this.addRenderableOnly(this.name);
         this.scrollingList = new EnchantmentSelectionList(this.leftPos + 18, this.topPos + 64);
         this.addRenderableWidget(this.scrollingList);
         this.refreshScrollingList();
@@ -160,7 +158,6 @@ public class EditEnchantmentsScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         guiGraphics.drawString(this.font, this.title, this.leftPos + 62, this.topPos + 8, 0xFF404040, false);
-        this.name.render(guiGraphics, mouseX, mouseY, partialTick);
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().scale(2.0F, 2.0F);
         guiGraphics.renderFakeItem(this.itemStack, (this.leftPos + 17) / 2, (this.topPos + 8) / 2);
